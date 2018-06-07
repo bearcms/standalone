@@ -61,7 +61,7 @@ class Standalone
             'appSecretKey' => $config['appSecretKey'],
             'logServerRequests' => false,
             'logServerRequestsData' => false,
-            'features' => ['ELEMENTS', 'PAGES', 'BLOG', 'THEMES', 'COMMENTS', 'FORUMS', 'SETTINGS', 'NOTIFICATIONS', 'USERS'],
+            'features' => ['ELEMENTS', 'PAGES', 'BLOG', 'THEMES', 'COMMENTS', 'FORUMS', 'SETTINGS', 'NOTIFICATIONS', 'USERS', 'ABOUT'],
             'addDefaultThemes' => true,
             'defaultThemeID' => isset($config['defaultThemeID']) ? $config['defaultThemeID'] : 'bearcms/universal',
             'maxUploadsSize' => null,
