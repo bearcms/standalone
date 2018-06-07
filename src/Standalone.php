@@ -68,7 +68,8 @@ class Standalone
             'useDataCache' => true,
             'dataCachePrefix' => md5($config['appSecretKey']),
             'htmlSandboxUrl' => 'https://cdn8.amcn.in/htmlSandbox.min.html',
-            'uiColor' => '#058cc4'
+            'uiColor' => isset($config['uiColor']) ? $config['uiColor'] : '#058cc4',
+            'whitelabel' => isset($config['whitelabel']) ? $config['whitelabel'] : false,
         ]);
 
         $getHashedAppSecretKey = function() use ($config) {
