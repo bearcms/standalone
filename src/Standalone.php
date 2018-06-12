@@ -57,7 +57,7 @@ class Standalone
         $app->initialize();
 
         $app->addons->add('bearcms/bearframework-addon', [
-            'serverUrl' => 'https://r05.bearcms.com/',
+            'serverUrl' => isset($config['serverUrl']) ? $config['serverUrl'] : 'https://r05.bearcms.com/',
             'appSecretKey' => $config['appSecretKey'],
             'logServerRequests' => false,
             'logServerRequestsData' => false,
