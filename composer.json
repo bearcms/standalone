@@ -14,8 +14,9 @@
     "require": {
         "php": ">=7.1.0",
         "ext-curl": "*",
-        "bearcms/bearframework-addon": "v0.4.*"
+        "bearcms/bearframework-addon": "0.4.*|dev-master"
     },
+    "prefer-stable": true,
     "require-dev": {
         "phpunit/phpunit": "^4.8"
     },
