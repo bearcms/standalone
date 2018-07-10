@@ -54,6 +54,10 @@ class Standalone
         $app->config->logErrors = isset($config['logErrors']) ? $config['logErrors'] : true;
         $app->config->displayErrors = isset($config['displayErrors']) ? $config['displayErrors'] : false;
 
+        if (isset($config['appDir'])) {
+            $app->config->appDir = $config['appDir'];
+        }
+
         $app->initialize();
 
         $app->addons->add('bearcms/bearframework-addon', [
