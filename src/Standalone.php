@@ -3,7 +3,7 @@
 /*
  * Bear CMS standalone
  * https://github.com/bearcms/standalone
- * Copyright (c) 2018 Amplilabs Ltd.
+ * Copyright (c) Amplilabs Ltd.
  * Free to use under the MIT license.
  */
 
