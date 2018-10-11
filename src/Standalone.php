@@ -64,15 +64,15 @@ class Standalone
             'serverUrl' => isset($config['serverUrl']) ? $config['serverUrl'] : 'https://r05.bearcms.com/',
             'appSecretKey' => $config['appSecretKey'],
             'logServerRequests' => false,
-            'logServerRequestsData' => false,
             'features' => ['ELEMENTS', 'PAGES', 'BLOG', 'THEMES', 'COMMENTS', 'FORUMS', 'SETTINGS', 'NOTIFICATIONS', 'USERS', 'ABOUT'],
             'addDefaultThemes' => true,
-            'defaultThemeID' => isset($config['defaultThemeID']) ? $config['defaultThemeID'] : 'bearcms/universal',
+            'defaultThemeID' => isset($config['defaultThemeID']) ? $config['defaultThemeID'] : 'bearcms/themeone',
             'maxUploadsSize' => null,
             'useDataCache' => true,
             'dataCachePrefix' => md5($config['appSecretKey']),
             'htmlSandboxUrl' => 'https://cdn8.amcn.in/htmlSandbox.min.html',
-            'uiColor' => isset($config['uiColor']) ? $config['uiColor'] : '#058cc4',
+            'uiColor' => isset($config['uiColor']) ? $config['uiColor'] : null,
+            'uiTextColor' => isset($config['uiTextColor']) ? $config['uiTextColor'] : null,
             'whitelabel' => isset($config['whitelabel']) ? $config['whitelabel'] : false,
         ]);
 
