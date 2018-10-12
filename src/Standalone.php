@@ -98,7 +98,7 @@ class Standalone
                     } else {
                         $data = ['status' => 'error', 'message' => 'Unknown action (' . $action . ')'];
                     }
-                    return new \BearFramework\App\Response\JSON($data);
+                    return new \BearFramework\App\Response\JSON(json_encode($data));
                 }, ['POST']);
 
         $app->run();
