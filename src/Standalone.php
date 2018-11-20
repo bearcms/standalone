@@ -60,11 +60,11 @@ class Standalone
 
         $app->initialize();
 
-        $app->addons->add('bearcms/bearframework-addon', [
+        $options = [
             'serverUrl' => isset($config['serverUrl']) ? $config['serverUrl'] : 'https://r05.bearcms.com/',
             'appSecretKey' => $config['appSecretKey'],
             'logServerRequests' => false,
-            'features' => ['ELEMENTS', 'PAGES', 'BLOG', 'THEMES', 'COMMENTS', 'FORUMS', 'SETTINGS', 'NOTIFICATIONS', 'USERS', 'ABOUT'],
+            'features' => ['ELEMENTS', 'PAGES', 'BLOG', 'THEMES', 'COMMENTS', 'FORUMS', 'SETTINGS', 'NOTIFICATIONS', 'USERS', 'ABOUT', 'ADDONS'],
             'addDefaultThemes' => true,
             'defaultThemeID' => isset($config['defaultThemeID']) ? $config['defaultThemeID'] : 'bearcms/themeone',
             'maxUploadsSize' => null,
@@ -73,8 +73,14 @@ class Standalone
             'htmlSandboxUrl' => 'https://cdn8.amcn.in/htmlSandbox.min.html',
             'uiColor' => isset($config['uiColor']) ? $config['uiColor'] : null,
             'uiTextColor' => isset($config['uiTextColor']) ? $config['uiTextColor'] : null,
-            'whitelabel' => isset($config['whitelabel']) ? $config['whitelabel'] : false,
-        ]);
+            'whitelabel' => isset($config['whitelabel']) ? $config['whitelabel'] : false
+        ];
+        if (isset($config['standalone-manager-filepath'])) {
+            $options['addonManager'] = function() use ($config) {
+                return include $config['standalone-manager-filepath'];
+            };
+        }
+        $app->addons->add('bearcms/bearframework-addon', $options);
 
         $getHashedAppSecretKey = function() use ($config) {
             $parts = explode('-', $config['appSecretKey'], 2);
