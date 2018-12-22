@@ -61,6 +61,9 @@ class Standalone
         $app->initialize();
 
         $options = [
+        if (isset($config['appDir']) && is_file($config['appDir'] . '/init.php')) {
+            require $config['appDir'] . '/init.php';
+        }
             'serverUrl' => isset($config['serverUrl']) ? $config['serverUrl'] : 'https://r05.bearcms.com/',
             'appSecretKey' => $config['appSecretKey'],
             'logServerRequests' => false,
