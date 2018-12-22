@@ -60,10 +60,11 @@ class Standalone
 
         $app->initialize();
 
-        $options = [
         if (isset($config['appDir']) && is_file($config['appDir'] . '/init.php')) {
             require $config['appDir'] . '/init.php';
         }
+
+        $bearCMSConfig = [
             'serverUrl' => isset($config['serverUrl']) ? $config['serverUrl'] : 'https://r05.bearcms.com/',
             'appSecretKey' => $config['appSecretKey'],
             'logServerRequests' => false,
@@ -79,11 +80,12 @@ class Standalone
             'whitelabel' => isset($config['whitelabel']) ? $config['whitelabel'] : false
         ];
         if (isset($config['standalone-manager-filepath'])) {
-            $options['addonManager'] = function() use ($config) {
+            $bearCMSConfig['addonManager'] = function() use ($config) {
                 return include $config['standalone-manager-filepath'];
             };
         }
-        $app->addons->add('bearcms/bearframework-addon', $options);
+        $app->addons->add('bearcms/bearframework-addon');
+        $app->bearCMS->initialize($bearCMSConfig);
 
         $getHashedAppSecretKey = function() use ($config) {
             $parts = explode('-', $config['appSecretKey'], 2);
