@@ -77,7 +77,11 @@ class Standalone
             'htmlSandboxUrl' => 'https://cdn8.amcn.in/htmlSandbox.min.html',
             'uiColor' => isset($config['uiColor']) ? $config['uiColor'] : null,
             'uiTextColor' => isset($config['uiTextColor']) ? $config['uiTextColor'] : null,
-            'whitelabel' => isset($config['whitelabel']) ? $config['whitelabel'] : false
+            'whitelabel' => isset($config['whitelabel']) ? $config['whitelabel'] : false,
+            'appSpecificServerData' => [
+                'clientID' => 'bearcms/standalone',
+                'releaseChannel' => isset($config['releaseChannel']) ? $config['releaseChannel'] : ''
+            ]
         ];
         if (isset($config['standalone-manager-filepath'])) {
             $bearCMSConfig['addonManager'] = function() use ($config) {
