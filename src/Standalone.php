@@ -49,26 +49,24 @@ class Standalone
             throw new \Exception('The appSecretKey option is required!');
         }
 
-        $app->config->dataDir = $config['dataDir'];
-        $app->config->logsDir = $config['logsDir'];
-        $app->config->logErrors = isset($config['logErrors']) ? $config['logErrors'] : true;
-        $app->config->displayErrors = isset($config['displayErrors']) ? $config['displayErrors'] : false;
+        $app->enableErrorHandler([
+            'logErrors' => isset($config['logErrors']) ? (int) $config['logErrors'] > 0 : true,
+            'displayErrors' => isset($config['displayErrors']) ? (int) $config['displayErrors'] > 0 : false,
+        ]);
 
-        if (isset($config['appDir'])) {
-            $app->config->appDir = $config['appDir'];
-        }
-
-        $app->initialize();
-
-        if (isset($config['appDir']) && is_file($config['appDir'] . '/init.php')) {
-            require $config['appDir'] . '/init.php';
+        $app->data->useFileDriver($config['dataDir']);
+        $app->cache->useAppDataDriver();
+        if (isset($config['logsDir']) && strlen($config['logsDir']) > 0) {
+            $app->logs->useFileLogger($config['logsDir']);
+        } else {
+            $app->logs->useNullLogger();
         }
 
         $bearCMSConfig = [
             'serverUrl' => isset($config['serverUrl']) ? $config['serverUrl'] : 'https://r05.bearcms.com/',
             'appSecretKey' => $config['appSecretKey'],
             'logServerRequests' => false,
-            'features' => ['ELEMENTS', 'PAGES', 'BLOG', 'THEMES', 'COMMENTS', 'FORUMS', 'SETTINGS', 'NOTIFICATIONS', 'USERS', 'ABOUT', 'ADDONS'],
+            'features' => ['ELEMENTS', 'PAGES', 'BLOG', 'THEMES', 'COMMENTS', 'SETTINGS', 'NOTIFICATIONS', 'USERS', 'ABOUT', 'ADDONS'],
             'addDefaultThemes' => true,
             'defaultThemeID' => isset($config['defaultThemeID']) ? $config['defaultThemeID'] : 'bearcms/themeone',
             'maxUploadsSize' => null,
@@ -100,7 +98,7 @@ class Standalone
         };
 
         $app->routes
-                ->add('/-bearcms-standalone-server-call', function() use ($app, $getHashedAppSecretKey) {
+                ->add('POST /-bearcms-standalone-server-call', function() use ($app, $getHashedAppSecretKey) {
                     if ($app->request->formData->getValue('appSecretKey') !== $getHashedAppSecretKey()) {
                         return;
                     }
@@ -114,7 +112,7 @@ class Standalone
                         $data = ['status' => 'error', 'message' => 'Unknown action (' . $action . ')'];
                     }
                     return new \BearFramework\App\Response\JSON(json_encode($data));
-                }, ['POST']);
+                });
 
         $app->run();
     }
