@@ -37,6 +37,11 @@ class Standalone
 
         $config = $this->config;
 
+        $app->enableErrorHandler([
+            'logErrors' => isset($config['logErrors']) ? (int) $config['logErrors'] > 0 : true,
+            'displayErrors' => isset($config['displayErrors']) ? (int) $config['displayErrors'] > 0 : false,
+        ]);
+
         if (!isset($config['dataDir'])) {
             throw new \Exception('The dataDir option is required!');
         }
@@ -49,15 +54,10 @@ class Standalone
             throw new \Exception('The appSecretKey option is required!');
         }
 
-        $app->enableErrorHandler([
-            'logErrors' => isset($config['logErrors']) ? (int) $config['logErrors'] > 0 : true,
-            'displayErrors' => isset($config['displayErrors']) ? (int) $config['displayErrors'] > 0 : false,
-        ]);
-
-        $app->data->useFileDriver($config['dataDir']);
+        $app->data->useFileDriver((string) $config['dataDir']);
         $app->cache->useAppDataDriver();
         if (isset($config['logsDir']) && strlen($config['logsDir']) > 0) {
-            $app->logs->useFileLogger($config['logsDir']);
+            $app->logs->useFileLogger((string) $config['logsDir']);
         } else {
             $app->logs->useNullLogger();
         }
@@ -65,24 +65,23 @@ class Standalone
         $bearCMSConfig = [
             'serverUrl' => isset($config['serverUrl']) ? $config['serverUrl'] : 'https://r05.bearcms.com/',
             'appSecretKey' => $config['appSecretKey'],
-            'logServerRequests' => false,
-            'features' => ['ELEMENTS', 'PAGES', 'BLOG', 'THEMES', 'COMMENTS', 'SETTINGS', 'NOTIFICATIONS', 'USERS', 'ABOUT', 'ADDONS'],
             'addDefaultThemes' => true,
             'defaultThemeID' => isset($config['defaultThemeID']) ? $config['defaultThemeID'] : 'bearcms/themeone',
             'maxUploadsSize' => null,
-            'useDataCache' => true,
-            'dataCachePrefix' => md5($config['appSecretKey']),
             'htmlSandboxUrl' => 'https://cdn8.amcn.in/htmlSandbox.min.html',
             'uiColor' => isset($config['uiColor']) ? $config['uiColor'] : null,
             'uiTextColor' => isset($config['uiTextColor']) ? $config['uiTextColor'] : null,
             'whitelabel' => isset($config['whitelabel']) ? $config['whitelabel'] : false,
-            'appSpecificServerData' => [
+            'internalAppSpecificServerData' => [
                 'clientID' => 'bearcms/standalone',
                 'releaseChannel' => isset($config['releaseChannel']) ? $config['releaseChannel'] : ''
             ]
         ];
         if (isset($config['standalone-manager-filepath'])) {
-            $bearCMSConfig['addonManager'] = function() use ($config) {
+            $bearCMSConfig['internalAddonManager'] = function() use ($config) {
+                return include $config['standalone-manager-filepath'];
+            };
+            $bearCMSConfig['internalConfigManager'] = function() use ($config) {
                 return include $config['standalone-manager-filepath'];
             };
         }
