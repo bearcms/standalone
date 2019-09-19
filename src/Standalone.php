@@ -78,17 +78,17 @@ class Standalone
             ]
         ];
         if (isset($config['standalone-manager-filepath'])) {
-            $bearCMSConfig['internalAddonManager'] = function() use ($config) {
+            $bearCMSConfig['internalAddonManager'] = function () use ($config) {
                 return include $config['standalone-manager-filepath'];
             };
-            $bearCMSConfig['internalConfigManager'] = function() use ($config) {
+            $bearCMSConfig['internalConfigManager'] = function () use ($config) {
                 return include $config['standalone-manager-filepath'];
             };
         }
         $app->addons->add('bearcms/bearframework-addon');
         $app->bearCMS->initialize($bearCMSConfig);
 
-        $getHashedAppSecretKey = function() use ($config) {
+        $getHashedAppSecretKey = function () use ($config) {
             $parts = explode('-', $config['appSecretKey'], 2);
             if (sizeof($parts) === 2) {
                 return strtoupper('sha256-' . $parts[0] . '-' . hash('sha256', $parts[1]));
@@ -97,23 +97,22 @@ class Standalone
         };
 
         $app->routes
-                ->add('POST /-bearcms-standalone-server-call', function() use ($app, $getHashedAppSecretKey) {
-                    if ($app->request->formData->getValue('appSecretKey') !== $getHashedAppSecretKey()) {
-                        return;
-                    }
-                    $action = $app->request->formData->getValue('action');
-                    if ($action === 'runTasks') {
-                        $app->tasks->run();
-                        $data = ['status' => 'ok'];
-                    } elseif ($action === 'status') {
-                        $data = ['status' => 'ok'];
-                    } else {
-                        $data = ['status' => 'error', 'message' => 'Unknown action (' . $action . ')'];
-                    }
-                    return new \BearFramework\App\Response\JSON(json_encode($data));
-                });
+            ->add('POST /-bearcms-standalone-server-call', function () use ($app, $getHashedAppSecretKey) {
+                if ($app->request->formData->getValue('appSecretKey') !== $getHashedAppSecretKey()) {
+                    return;
+                }
+                $action = $app->request->formData->getValue('action');
+                if ($action === 'runTasks') {
+                    $app->tasks->run();
+                    $data = ['status' => 'ok'];
+                } elseif ($action === 'status') {
+                    $data = ['status' => 'ok'];
+                } else {
+                    $data = ['status' => 'error', 'message' => 'Unknown action (' . $action . ')'];
+                }
+                return new \BearFramework\App\Response\JSON(json_encode($data));
+            });
 
         $app->run();
     }
-
 }
