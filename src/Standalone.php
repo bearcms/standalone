@@ -88,6 +88,8 @@ class Standalone
         $app->addons->add('bearcms/bearframework-addon');
         $app->bearCMS->initialize($bearCMSConfig);
 
+        $app->addons->add('bearcms/tasks-runner-bearframework-addon');
+
         $getHashedAppSecretKey = function () use ($config) {
             $parts = explode('-', $config['appSecretKey'], 2);
             if (sizeof($parts) === 2) {

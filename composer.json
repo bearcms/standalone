@@ -1,7 +1,10 @@
 {
     "name": "bearcms/standalone",
     "description": "Bear CMS standalone",
-    "keywords": ["Bear CMS", "standalone"],
+    "keywords": [
+        "Bear CMS",
+        "standalone"
+    ],
     "homepage": "https://bearcms.com/",
     "license": "MIT",
     "authors": [
@@ -15,13 +18,16 @@
         "php": ">=7.1.0",
         "ext-curl": "*",
         "bearframework/bearframework": "1.*",
-        "bearcms/bearframework-addon": "1.*"
+        "bearcms/bearframework-addon": "1.*",
+        "bearcms/tasks-runner-bearframework-addon": "0.1.*"
     },
     "prefer-stable": true,
     "require-dev": {
         "phpunit/phpunit": "7.*"
     },
     "autoload": {
-        "files": ["autoload.php"]
+        "files": [
+            "autoload.php"
+        ]
     }
 }
