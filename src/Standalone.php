@@ -102,10 +102,7 @@ class Standalone
                     return;
                 }
                 $action = $app->request->formData->getValue('action');
-                if ($action === 'runTasks') {
-                    $app->tasks->run();
-                    $data = ['status' => 'ok'];
-                } elseif ($action === 'status') {
+                if ($action === 'status') {
                     $data = ['status' => 'ok'];
                 } else {
                     $data = ['status' => 'error', 'message' => 'Unknown action (' . $action . ')'];
