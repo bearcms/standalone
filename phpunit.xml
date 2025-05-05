@@ -7,7 +7,7 @@
          beStrictAboutOutputDuringTests="true"
          stopOnFailure="true">
     <testsuites>
-        <testsuite name="">
+        <testsuite name="Tests">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

@@ -92,7 +92,7 @@ class Standalone
 
         $getHashedAppSecretKey = function () use ($config) {
             $parts = explode('-', $config['appSecretKey'], 2);
-            if (sizeof($parts) === 2) {
+            if (count($parts) === 2) {
                 return strtoupper('sha256-' . $parts[0] . '-' . hash('sha256', $parts[1]));
             }
             return '';
