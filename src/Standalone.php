@@ -63,7 +63,7 @@ class Standalone
         }
 
         $bearCMSConfig = [
-            'serverUrl' => isset($config['serverUrl']) ? $config['serverUrl'] : 'https://r05.bearcms.com/',
+            'serverUrl' => isset($config['serverUrl']) ? $config['serverUrl'] : 'https://r08.bearcms.com/',
             'appSecretKey' => $config['appSecretKey'],
             'addDefaultThemes' => true,
             'defaultThemeID' => isset($config['defaultThemeID']) ? $config['defaultThemeID'] : 'bearcms/themeone',
