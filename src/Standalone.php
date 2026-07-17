@@ -68,7 +68,7 @@ class Standalone
             'addDefaultThemes' => true,
             'defaultThemeID' => isset($config['defaultThemeID']) ? $config['defaultThemeID'] : 'bearcms/themeone',
             'maxUploadsSize' => null,
-            'htmlSandboxUrl' => 'https://cdn8.amcn.in/htmlSandbox.min.html',
+            'htmlSandboxUrl' => 'https://cdn8.amwws.com/htmlSandbox.min.html',
             'uiColor' => isset($config['uiColor']) ? $config['uiColor'] : null,
             'uiTextColor' => isset($config['uiTextColor']) ? $config['uiTextColor'] : null,
             'whitelabel' => isset($config['whitelabel']) ? $config['whitelabel'] : false,
